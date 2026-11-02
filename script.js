@@ -286,3 +286,38 @@ statNumbers.forEach(el => counterObserver.observe(el));
     if (scrollInd) scrollInd.style.animation = 'none';
   }
 })();
+
+
+/* ─── 15. PROJECT FILTER ────────────────────────────────────── */
+(function initProjectFilter() {
+  const filterBtns   = document.querySelectorAll('.filter-btn');
+  const projectCards = document.querySelectorAll('.project-card');
+
+  if (!filterBtns.length || !projectCards.length) return;
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter;
+
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      projectCards.forEach(card => {
+        const cat = card.dataset.category;
+        const matches = (filter === 'all' || cat === filter);
+
+        if (matches) {
+          card.style.display = '';
+          requestAnimationFrame(() => {
+            card.classList.add('visible');
+            card.style.opacity = '1';
+            card.style.transform = '';
+          });
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+})();
+
